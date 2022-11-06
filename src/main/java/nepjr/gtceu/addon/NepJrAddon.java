@@ -9,15 +9,16 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
 import gregtech.api.GTValues;
+import nepjr.gtceu.addon.covers.AddonCoverBehaviour;
 import nepjr.gtceu.addon.items.AddonMetaItems;
 import nepjr.gtceu.addon.tile.AddonMetaTileEntities;
 
 @Mod(modid = NepJrAddon.MODID, name = NepJrAddon.NAME, version = NepJrAddon.VERSION)
 public class NepJrAddon
 {
-    public static final String MODID = "nepjr-gtceu-addon";
-    public static final String NAME = "NepJr's GTCEu Addon";
-    public static final String VERSION = "1.1";
+    public static final String MODID = "gregious-maximus";
+    public static final String NAME = "Gregious Maxmimus";
+    public static final String VERSION = "1.1 Beta 1";
 
     private static Logger logger;
 
@@ -35,6 +36,7 @@ public class NepJrAddon
     {
         // some example code
     	System.out.println("NepJr's GTCEu says \"Hello from Init!\"");
+    	AddonCoverBehaviour.init();
     }
     
     @EventHandler
