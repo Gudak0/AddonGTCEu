@@ -1,0 +1,139 @@
+// Machines
+gregtech.machine.distillery.max.name=Overpowered Distillery
+gregtech.machine.distillery.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.alloy_smelter.max.name=Overpowered Alloy Smelter
+gregtech.machine.alloy_smelter.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.macerator.max.name=Overpowered Macerator
+gregtech.machine.macerator.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.circuit_assembler.max.name=Overpowered Circuit Assembler
+gregtech.machine.circuit_assembler.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.arc_furnace.max.name=Overpowered Arc Furnace
+gregtech.machine.arc_furnace.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.distillery.max.name=Overpowered Distillery
+gregtech.machine.distillery.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.assembler.max.name=Overpowered Assembler
+gregtech.machine.assembler.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.autoclave.max.name=Overpowered Autoclave
+gregtech.machine.autoclave.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.bender.max.name=Overpowered Bender
+gregtech.machine.bender.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.brewery.max.name=Overpowered Brewery
+gregtech.machine.brewery.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.canner.max.name=Overpowered Canner
+gregtech.machine.canner.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.centrifuge.max.name=Overpowered Centrifuge
+gregtech.machine.centrifuge.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.chemical_bath.max.name=Overpowered Chemical Bath
+gregtech.machine.chemical_bath.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.chemical_reactor.max.name=Overpowered Chemical Reactor
+gregtech.machine.chemical_reactor.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.compressor.max.name=Overpowered Compressor
+gregtech.machine.compressor.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.cutter.max.name=Overpowered Cutter
+gregtech.machine.cutter.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.electrolyzer.max.name=Overpowered Electrolyzer
+gregtech.machine.electrolyzer.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.electromagnetic_separator.max.name=Overpowered Electromagnetic Separator
+gregtech.machine.electromagnetic_separator.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.extractor.max.name=Overpowered Extractor
+gregtech.machine.extractor.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.extruder.max.name=Overpowered Extruder
+gregtech.machine.extruder.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.fermenter.max.name=Overpowered Fermenter
+gregtech.machine.fermenter.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.fluid_heater.max.name=Overpowered Fluid Heater
+gregtech.machine.fluid_heater.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.fluid_solidifier.max.name=Overpowered Fluid Solidifier
+gregtech.machine.fluid_solidifier.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.forge_hammer.max.name=Overpowered Forge Hammer
+gregtech.machine.forge_hammer.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.forming_press.max.name=Overpowered Forming Press
+gregtech.machine.forming_press.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.lathe.max.name=Overpowered Lathe
+gregtech.machine.lathe.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.mixer.max.name=Overpowered Mixer
+gregtech.machine.mixer.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.ore_washer.max.name=Overpowered Ore Washer
+gregtech.machine.ore_washer.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.packer.max.name=Overpowered Packer
+gregtech.machine.packer.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.polarizer.max.name=Overpowered Polarizer
+gregtech.machine.polarizer.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.laser_engraver.max.name=Overpowered Laser Engraver
+gregtech.machine.laser_engraver.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.sifter.max.name=Overpowered Sifter
+gregtech.machine.sifter.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.thermal_centrifuge.max.name=Overpowered Thermal Centrifuge
+gregtech.machine.thermal_centrifuge.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+gregtech.machine.wiremill.max.name=Overpowered Wiremill
+gregtech.machine.wiremill.max.tooltip=§aMy §oPower§r§a §lIS§r§a §l§oMAXIMUM
+
+// Circuits (Names existed in GTCEu's code comments so I'm using those except for MAX)
+
+// UHV
+metaitem.circuit.uhv.1.name=Bioware Processor 1
+metaitem.circuit.uhv.2.name=Bioware Processor 2
+metaitem.circuit.uhv.3.name=Bioware Processor 3
+
+// UEV
+metaitem.circuit.uev.1.name=Optical Processor 1
+metaitem.circuit.uev.2.name=Optical Processor 2
+metaitem.circuit.uev.3.name=Optical Processor 3
+
+// UIV
+metaitem.circuit.uiv.1.name=Exotic Processor 1
+metaitem.circuit.uiv.2.name=Exotic Processor 2
+metaitem.circuit.uiv.3.name=Exotic Processor 3
+
+// UXV
+metaitem.circuit.uxv.1.name=Cosmic Processor 1
+metaitem.circuit.uxv.2.name=Cosmic Processor 2
+metaitem.circuit.uxv.3.name=Cosmic Processor 3
+
+// OpV
+metaitem.circuit.opv.1.name=Supra-Causal Processor 1
+metaitem.circuit.opv.2.name=Supra-Causal Processor 2
+metaitem.circuit.opv.3.name=Supra-Causal Processor 3
+
+// MAX
+metaitem.circuit.max.1.name=Subatomic Processor 1
+metaitem.circuit.max.2.name=Subatomic Processor 2
+metaitem.circuit.max.3.name=Subatomic Processor 3
+
+////////////
+/ Materials/
+////////////
+material.element_zero=§bElement Zero
