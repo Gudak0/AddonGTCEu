@@ -1,9 +1,9 @@
 [
 {
-  "modid": "gregious-maximus",
+  "modid": "gregiousmaximus",
   "name": "Gregious Maximus",
   "description": "Implementing stuff in GregTech Community Edition Unofficial to have tiers up to MAX.",
-  "version": "1.1-b1",
+  "version": "1.1-b2",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
@@ -11,6 +11,6 @@
   "credits": "GTCEu team for the Mod",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": "required-after:gregtech"
 }
 ]

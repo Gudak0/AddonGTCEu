@@ -2,6 +2,7 @@ package nepjr.gtceu.addon.tile;
 
 import java.util.function.Function;
 
+import gregtech.GregTechMod;
 import gregtech.api.GTValues;
 import gregtech.api.GregTechAPI;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -17,16 +18,19 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntityHull;
 import gregtech.common.metatileentities.electric.MetaTileEntityMacerator;
+import gregtech.common.metatileentities.multi.electric.MetaTileEntityFusionReactor;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityEnergyHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluidHatch;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.integration.jei.multiblock.MultiblockInfoCategory;
+import nepjr.gtceu.addon.NepJrAddon;
+import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityFusionReactor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import scala.actors.threadpool.Arrays;
 
-public class AddonMetaTileEntities 
+public class AddonMetaTileEntitiesUHV 
 {
 	public static final MetaTileEntityHull[] MOD_HULL = new MetaTileEntityHull[GTValues.V.length];
 	
@@ -65,6 +69,8 @@ public class AddonMetaTileEntities
     public static final SimpleMachineMetaTileEntity[] MOD_THERMAL_CENTRIFUGE = new SimpleMachineMetaTileEntity[GTValues.V.length];
     public static final SimpleMachineMetaTileEntity[] MOD_WIREMILL = new SimpleMachineMetaTileEntity[GTValues.V.length];
     public static final SimpleMachineMetaTileEntity[] MOD_CIRCUIT_ASSEMBLER = new SimpleMachineMetaTileEntity[GTValues.V.length];
+    
+    public static final SimpleMachineMetaTileEntity[] MOD_REPLICATOR = new SimpleMachineMetaTileEntity[GTValues.V.length];
 	
     public static final MetaTileEntityItemBus[] MOD_ITEM_IMPORT_BUS = new MetaTileEntityItemBus[GTValues.V.length - 2]; // ULV-UHV
     public static final MetaTileEntityItemBus[] MOD_ITEM_EXPORT_BUS = new MetaTileEntityItemBus[GTValues.V.length - 2];
@@ -81,12 +87,12 @@ public class AddonMetaTileEntities
     
 	public static void init()
 	{
-		MOD_MACERATOR[9] =  MetaTileEntities.registerMetaTileEntity(11500, new MetaTileEntityMacerator(gregtechId("macerator.uhv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 9));
-        MOD_MACERATOR[10] = MetaTileEntities.registerMetaTileEntity(11501, new MetaTileEntityMacerator(gregtechId("macerator.uev"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 10));
-        MOD_MACERATOR[11] = MetaTileEntities.registerMetaTileEntity(11502, new MetaTileEntityMacerator(gregtechId("macerator.uiv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 11));
-        MOD_MACERATOR[12] = MetaTileEntities.registerMetaTileEntity(11503, new MetaTileEntityMacerator(gregtechId("macerator.uxv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 12));
-        MOD_MACERATOR[13] = MetaTileEntities.registerMetaTileEntity(11504, new MetaTileEntityMacerator(gregtechId("macerator.opv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 13));
-        MOD_MACERATOR[14] = MetaTileEntities.registerMetaTileEntity(11505, new MetaTileEntityMacerator(gregtechId("macerator.max"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 14));
+		MOD_MACERATOR[9] =  MetaTileEntities.registerMetaTileEntity(11500, new MetaTileEntityMacerator(addonId("macerator.uhv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 9));
+        MOD_MACERATOR[10] = MetaTileEntities.registerMetaTileEntity(11501, new MetaTileEntityMacerator(addonId("macerator.uev"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 10));
+        MOD_MACERATOR[11] = MetaTileEntities.registerMetaTileEntity(11502, new MetaTileEntityMacerator(addonId("macerator.uiv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 11));
+        MOD_MACERATOR[12] = MetaTileEntities.registerMetaTileEntity(11503, new MetaTileEntityMacerator(addonId("macerator.uxv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 12));
+        MOD_MACERATOR[13] = MetaTileEntities.registerMetaTileEntity(11504, new MetaTileEntityMacerator(addonId("macerator.opv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 13));
+        MOD_MACERATOR[14] = MetaTileEntities.registerMetaTileEntity(11505, new MetaTileEntityMacerator(addonId("macerator.max"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 14));
         
         registerSimpleMetaTileEntity(MOD_ALLOY_SMELTER, 11506, "alloy_smelter", RecipeMaps.ALLOY_SMELTER_RECIPES, Textures.ALLOY_SMELTER_OVERLAY, true);
         
@@ -147,7 +153,7 @@ public class AddonMetaTileEntities
 
         // TODO Should anonymously override SimpleMachineMetaTileEntity#getCircuitSlotOverlay() to display the data stick overlay
         // Replicator, IDs 365-379
-        //registerSimpleMetaTileEntity(MOD_REPLICATOR, 11618, "replicator", RecipeMaps.REPLICATOR_RECIPES, Textures.REPLICATOR_OVERLAY, true);
+        registerSimpleMetaTileEntity(MOD_REPLICATOR, 11618, "replicator", RecipeMaps.REPLICATOR_RECIPES, Textures.REPLICATOR_OVERLAY, true);
 
         // Fluid Heater, IDs 380-394
         registerSimpleMetaTileEntity(MOD_FLUID_HEATER, 11624, "fluid_heater", RecipeMaps.FLUID_HEATER_RECIPES, Textures.FLUID_HEATER_OVERLAY, true, megaCappedTankSizeFunction);
@@ -207,38 +213,38 @@ public class AddonMetaTileEntities
             MOD_FLUID_IMPORT_HATCH[i] = new MetaTileEntityFluidHatch(gregtechId("fluid_hatch.import." + voltageName), i, false);
             MOD_FLUID_EXPORT_HATCH[i] = new MetaTileEntityFluidHatch(gregtechId("fluid_hatch.export." + voltageName), i, true);
 
-            // While the code to support it is here, these are currently disabled since Item busses only have a max of 100
-            // and would require some funky setup to get 100+ slots working with how GT does GUI stuff
+            // While the code to support it is here, Item busses only have a max of 100 slots
+            // and would probably require some funky setup to get 100+ slots working with how GT does GUI stuff
             // and the liquids I would need to implement higher tier support manually
             // TODO: Make it so Higher Tier Fluid hatches store more liquids
             // TODO: Somehow implement a way where higher tier Item busses can store more items
             
-            //registerMetaTileEntity(11714 + i -8, MOD_ITEM_IMPORT_BUS[i]);
-            //registerMetaTileEntity(11720 + i -8, MOD_ITEM_EXPORT_BUS[i]);
-            //registerMetaTileEntity(11726 + i -8, MOD_FLUID_IMPORT_HATCH[i]);
-            //registerMetaTileEntity(11732 + i -8, MOD_FLUID_EXPORT_HATCH[i]);
+            registerMetaTileEntity(11714 + i -8, MOD_ITEM_IMPORT_BUS[i]);
+            registerMetaTileEntity(11720 + i -8, MOD_ITEM_EXPORT_BUS[i]);
+            registerMetaTileEntity(11726 + i -8, MOD_FLUID_IMPORT_HATCH[i]);
+            registerMetaTileEntity(11732 + i -8, MOD_FLUID_EXPORT_HATCH[i]);
         }
         
         // Hulls, IDs 985-999
         int endPos = !GTValues.HT ? MOD_HULL.length : Math.min(MOD_HULL.length, GTValues.V.length);
         for (int i = 10; i < endPos; i++) {
-            MOD_HULL[i] = new MetaTileEntityHull(gregtechId("hull." + GTValues.VN[i].toLowerCase()), i);
-            registerMetaTileEntity(11736 + i -10, MOD_HULL[i]);
+            MOD_HULL[i] = new MetaTileEntityHull(addonId("hull." + GTValues.VN[i].toLowerCase()), i);
+            registerMetaTileEntity(11738 + i -10, MOD_HULL[i]);
         }
         
         // Energy Input/Output Hatches, IDs 1210-1269
         endPos = !GTValues.HT ? MOD_ENERGY_INPUT_HATCH.length : Math.min(MOD_ENERGY_INPUT_HATCH.length, GTValues.V.length);
         for (int i = 10; i < endPos; i++) {
             String voltageName = GTValues.VN[i].toLowerCase();
-            MOD_ENERGY_INPUT_HATCH[i] = registerMetaTileEntity(11742 + i -10, new MetaTileEntityEnergyHatch(gregtechId("energy_hatch.input." + voltageName), i, 2, false));
-            MOD_ENERGY_OUTPUT_HATCH[i] = registerMetaTileEntity(11748 + i -10, new MetaTileEntityEnergyHatch(gregtechId("energy_hatch.output." + voltageName), i, 2, true));
-            MOD_ENERGY_INPUT_HATCH_4A[i]   = registerMetaTileEntity(11754 + i -10, new MetaTileEntityEnergyHatch(gregtechId("energy_hatch.input_4a." + voltageName), i, 4, false));
-            MOD_ENERGY_INPUT_HATCH_16A[i]  = registerMetaTileEntity(11760 + i -10, new MetaTileEntityEnergyHatch(gregtechId("energy_hatch.input_16a." + voltageName), i, 16, false));
-            MOD_ENERGY_OUTPUT_HATCH_4A[i]  = registerMetaTileEntity(11766 + i -10, new MetaTileEntityEnergyHatch(gregtechId("energy_hatch.output_4a." + voltageName), i, 4, true));
-            MOD_ENERGY_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(11772 + i -10, new MetaTileEntityEnergyHatch(gregtechId("energy_hatch.output_16a." + voltageName), i, 16, true));
+            MOD_ENERGY_INPUT_HATCH[i] = registerMetaTileEntity(11744 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.input." + voltageName), i, 2, false));
+            MOD_ENERGY_OUTPUT_HATCH[i] = registerMetaTileEntity(11750 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.output." + voltageName), i, 2, true));
+            MOD_ENERGY_INPUT_HATCH_4A[i]   = registerMetaTileEntity(11756 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.input_4a." + voltageName), i, 4, false));
+            MOD_ENERGY_INPUT_HATCH_16A[i]  = registerMetaTileEntity(11762 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.input_16a." + voltageName), i, 16, false));
+            MOD_ENERGY_OUTPUT_HATCH_4A[i]  = registerMetaTileEntity(11768 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.output_4a." + voltageName), i, 4, true));
+            MOD_ENERGY_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(11774 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.output_16a." + voltageName), i, 16, true));
 
         }
-	}	
+}	
 	
 	    private static void registerSimpleMetaTileEntity(SimpleMachineMetaTileEntity[] machines,
                                                     int startId,
@@ -247,7 +253,7 @@ public class AddonMetaTileEntities
                                                      ICubeRenderer texture,
                                                     boolean hasFrontFacing,
                                                     Function<Integer, Integer> tankScalingFunction) {
-        registerSimpleMetaTileEntity(machines, startId, name, map, texture, hasFrontFacing, AddonMetaTileEntities::gregtechId, tankScalingFunction);
+        registerSimpleMetaTileEntity(machines, startId, name, map, texture, hasFrontFacing, AddonMetaTileEntitiesUHV::gregtechId, tankScalingFunction);
     }
 
     private static void registerSimpleMetaTileEntity(SimpleMachineMetaTileEntity[] machines,
@@ -279,7 +285,7 @@ public class AddonMetaTileEntities
                     new SimpleMachineMetaTileEntity(resourceId.apply(String.format("%s.%s", name, voltageName)), map, texture, i + 1, hasFrontFacing, tankScalingFunction));
         }
     }
-
+    
     public static <T extends MetaTileEntity> T registerMetaTileEntity(int id, T sampleMetaTileEntity) {
         if (sampleMetaTileEntity instanceof IMultiblockAbilityPart) {
             IMultiblockAbilityPart<?> abilityPart = (IMultiblockAbilityPart<?>) sampleMetaTileEntity;
@@ -293,12 +299,15 @@ public class AddonMetaTileEntities
         GregTechAPI.MTE_REGISTRY.register(id, sampleMetaTileEntity.metaTileEntityId, sampleMetaTileEntity);
         return sampleMetaTileEntity;
     }
-
-	  private static ResourceLocation gregtechId(String name) {
-	        return new ResourceLocation(GTValues.MODID, name);
-	    }
 	  
-	    public static final Function<Integer, Integer> megaCappedTankSizeFunction = tier -> {
+	  static ResourceLocation addonId(String name) {
+	        return new ResourceLocation(NepJrAddon.MODID, name);
+	    }
+    static ResourceLocation gregtechId(String name) {
+        return new ResourceLocation(GTValues.MODID, name);
+    }
+
+    public static final Function<Integer, Integer> megaCappedTankSizeFunction = tier -> {
 	    	
 	    	if (tier <= GTValues.OpV)
 	    		return 262144;	    	

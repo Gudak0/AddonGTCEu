@@ -1,6 +1,8 @@
 package nepjr.gtceu.addon.items;
 
 import gregtech.api.items.metaitem.StandardMetaItem;
+import gregtech.api.unification.material.MarkerMaterials;
+import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 
 public class AddonMetaItem1 extends StandardMetaItem {
@@ -37,28 +39,28 @@ public class AddonMetaItem1 extends StandardMetaItem {
         AddonMetaItems.CONVEYOR_MODULE_OpV =		addItem(17, "conveyor.module.opv");
         AddonMetaItems.CONVEYOR_MODULE_MAX =		addItem(18, "conveyor.module.max");
         
-        AddonMetaItems.CIRCUIT_UHV_1 = 				addItem(19, "circuit.uhv.1");
-        AddonMetaItems.CIRCUIT_UHV_2 = 				addItem(20, "circuit.uhv.2");
+        AddonMetaItems.CIRCUIT_UHV_1 = 				addItem(19, "circuit.uhv.1").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UHV);
+        AddonMetaItems.CIRCUIT_UHV_2 = 				addItem(20, "circuit.uhv.2").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UHV);;
         
-        AddonMetaItems.CIRCUIT_UEV_1 = 				addItem(21, "circuit.uev.1");
-        AddonMetaItems.CIRCUIT_UEV_2 = 				addItem(22, "circuit.uev.2");
-        AddonMetaItems.CIRCUIT_UEV_3 = 				addItem(23, "circuit.uev.3");
+        AddonMetaItems.CIRCUIT_UEV_1 = 				addItem(21, "circuit.uev.1").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV);;
+        AddonMetaItems.CIRCUIT_UEV_2 = 				addItem(22, "circuit.uev.2").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV);;
+        AddonMetaItems.CIRCUIT_UEV_3 = 				addItem(23, "circuit.uev.3").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UEV);;
         
-        AddonMetaItems.CIRCUIT_UIV_1 = 				addItem(24, "circuit.uiv.1");
-        AddonMetaItems.CIRCUIT_UIV_2 = 				addItem(25, "circuit.uiv.2");
-        AddonMetaItems.CIRCUIT_UIV_3 = 				addItem(26, "circuit.uiv.3");
+        AddonMetaItems.CIRCUIT_UIV_1 = 				addItem(24, "circuit.uiv.1").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV);;
+        AddonMetaItems.CIRCUIT_UIV_2 = 				addItem(25, "circuit.uiv.2").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV);;
+        AddonMetaItems.CIRCUIT_UIV_3 = 				addItem(26, "circuit.uiv.3").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UIV);;
         
-        AddonMetaItems.CIRCUIT_UXV_1 = 				addItem(27, "circuit.uxv.1");
-        AddonMetaItems.CIRCUIT_UXV_2 = 				addItem(28, "circuit.uxv.2");
-        AddonMetaItems.CIRCUIT_UXV_3 = 				addItem(29, "circuit.uxv.3");
+        AddonMetaItems.CIRCUIT_UXV_1 = 				addItem(27, "circuit.uxv.1").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV);;
+        AddonMetaItems.CIRCUIT_UXV_2 = 				addItem(28, "circuit.uxv.2").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV);;
+        AddonMetaItems.CIRCUIT_UXV_3 = 				addItem(29, "circuit.uxv.3").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.UXV);;
         
-        AddonMetaItems.CIRCUIT_OpV_1 = 				addItem(30, "circuit.opv.1");
-        AddonMetaItems.CIRCUIT_OpV_2 = 				addItem(31, "circuit.opv.2");
-        AddonMetaItems.CIRCUIT_OpV_3 = 				addItem(32, "circuit.opv.3");
+        AddonMetaItems.CIRCUIT_OpV_1 = 				addItem(30, "circuit.opv.1").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV);;
+        AddonMetaItems.CIRCUIT_OpV_2 = 				addItem(31, "circuit.opv.2").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV);;
+        AddonMetaItems.CIRCUIT_OpV_3 = 				addItem(32, "circuit.opv.3").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.OpV);;
         
-        AddonMetaItems.CIRCUIT_MAX_1 = 				addItem(33, "circuit.max.1");
-        AddonMetaItems.CIRCUIT_MAX_2 = 				addItem(34, "circuit.max.2");
-        AddonMetaItems.CIRCUIT_MAX_3 = 				addItem(35, "circuit.max.3");
+        AddonMetaItems.CIRCUIT_MAX_1 = 				addItem(33, "circuit.max.1").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MAX);;
+        AddonMetaItems.CIRCUIT_MAX_2 = 				addItem(34, "circuit.max.2").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MAX);;
+        AddonMetaItems.CIRCUIT_MAX_3 = 				addItem(35, "circuit.max.3").setUnificationData(OrePrefix.circuit, MarkerMaterials.Tier.MAX);;
 	}
 
 }
