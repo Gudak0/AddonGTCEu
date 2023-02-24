@@ -1,0 +1,341 @@
+package nepjr.gtceu.addon.tile.multi.elec;
+
+import gregtech.api.GTValues;
+import gregtech.api.capability.GregtechDataCodes;
+import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.capability.impl.*;
+import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.pattern.BlockPattern;
+import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.MultiblockShapeInfo;
+import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.Recipe;
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.recipeproperties.FusionEUToStartProperty;
+import gregtech.api.util.interpolate.Eases;
+import gregtech.client.renderer.ICubeRenderer;
+import gregtech.client.renderer.texture.Textures;
+import gregtech.client.shader.postprocessing.BloomEffect;
+import gregtech.client.utils.BloomEffectUtil;
+import gregtech.client.utils.RenderBufferHelper;
+import gregtech.client.utils.RenderUtil;
+import gregtech.common.ConfigHolder;
+import gregtech.common.blocks.BlockFusionCasing;
+import gregtech.common.blocks.BlockGlassCasing;
+import gregtech.common.blocks.BlockMetalCasing;
+import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.metatileentities.MetaTileEntities;
+import nepjr.gtceu.addon.recipes.ModRecipeMaps;
+import nepjr.gtceu.addon.recipes.multiblock.ModFusionEUToStartProperty;
+import nepjr.gtceu.addon.tile.AddonMetaTileEntitiesMultiblock;
+import nepjr.gtceu.addon.tile.AddonMetaTileEntitiesUHV;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+public class AddonMetaTileEntityResourceMiner  extends RecipeMapMultiblockController {
+	
+    private final int tier;
+    private EnergyContainerList inputEnergyContainers;
+    private Integer color;
+
+	public AddonMetaTileEntityResourceMiner(ResourceLocation metaTileEntityId, int tier) {
+		super(metaTileEntityId, ModRecipeMaps.RESOURCE_MINER);
+		this.recipeMapWorkable = new ResourceMinerRecipeLogic(this);
+        this.tier = tier;
+        this.energyContainer = new EnergyContainerHandler(this, Integer.MAX_VALUE, 0, 0, 0, 0) {
+            @Override
+            public String getName() {
+                return "EnergyContainerInternal";
+            }
+        };
+		// TODO Auto-generated constructor stub
+	}
+	
+    @Override
+    public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
+        return new AddonMetaTileEntityResourceMiner(metaTileEntityId, tier);
+    }
+    
+    @Override
+    protected BlockPattern createStructurePattern() {
+    	return FactoryBlockPattern.start()
+    			.aisle("XXX", "TLT", "TTT")
+    			.aisle("TTT", "ITO", "TTT")
+    			.aisle("TTT", "TST", "TTT")
+    			.where('S', selfPredicate())
+    			.where('O', states(getCasingState()).or(abilities(MultiblockAbility.EXPORT_ITEMS)))
+                .where('I', states(getCasingState()).or(abilities(MultiblockAbility.IMPORT_ITEMS).setMinGlobalLimited(recipeMap.getMinInputs())))
+                .where('L', states(getCasingState()).or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMinGlobalLimited(recipeMap.getMinFluidInputs())))
+    			.where('X', states(getCasingState()).or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(3)))
+                .where('T', states(getCasingState()))
+    			.build();
+    }
+    
+    @Override
+    public List<MultiblockShapeInfo> getMatchingShapes() {
+        List<MultiblockShapeInfo> shapeInfos = new ArrayList<>();
+            MultiblockShapeInfo.Builder baseBuilder = MultiblockShapeInfo.builder()
+        			.aisle("XXX", "TLT", "TTT")
+        			.aisle("TTT", "ITO", "TTT")
+        			.aisle("TTT", "TST", "TTT")
+        			.where('S', AddonMetaTileEntitiesMultiblock.MOD_RESOURCE_MINER[tier], EnumFacing.SOUTH)
+        			.where('T', getCasingState())
+        			.where('X', MetaTileEntities.ENERGY_INPUT_HATCH[tier], EnumFacing.NORTH)
+        			.where('I', MetaTileEntities.ITEM_IMPORT_BUS[tier], EnumFacing.WEST)
+        			.where('O', MetaTileEntities.ITEM_EXPORT_BUS[tier], EnumFacing.EAST)
+        			.where('L', MetaTileEntities.FLUID_IMPORT_HATCH[tier], EnumFacing.NORTH);
+            shapeInfos.add(baseBuilder.build());
+            return shapeInfos;
+    }
+    
+    private IBlockState getCasingState() {
+        return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.TITANIUM_STABLE);
+    }
+    
+    @Override
+    public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
+        if (this.recipeMapWorkable.isActive()) {
+            return Textures.TITANIUM_FIREBOX_ACTIVE;
+        } else {
+            return Textures.TITANIUM_FIREBOX;
+        }
+    }
+	
+    @Override
+    protected void formStructure(PatternMatchContext context) {
+        long energyStored = this.energyContainer.getEnergyStored();
+        super.formStructure(context);
+        this.initializeAbilities();
+        ((EnergyContainerHandler) this.energyContainer).setEnergyStored(energyStored);
+    }
+
+    @Override
+    protected void initializeAbilities() {
+        this.inputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.IMPORT_ITEMS));
+        this.inputFluidInventory = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.outputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.EXPORT_ITEMS));
+        List<IEnergyContainer> energyInputs = getAbilities(MultiblockAbility.INPUT_ENERGY);
+        this.inputEnergyContainers = new EnergyContainerList(energyInputs);
+        long euCapacity = calculateEnergyStorageFactor(energyInputs.size());
+        this.energyContainer = new EnergyContainerHandler(this, euCapacity, GTValues.V[tier], 0, 0, 0) {
+            @Override
+            public String getName() {
+                return "EnergyContainerInternal";
+            }
+        };
+    }
+
+    private long calculateEnergyStorageFactor(int energyInputAmount) {
+        return energyInputAmount * (long) Math.pow(2, tier - 6) * 10000000L;
+    }
+
+    @Override
+    protected void updateFormedValid() {
+        if (this.inputEnergyContainers.getEnergyStored() > 0) {
+            long energyAdded = this.energyContainer.addEnergy(this.inputEnergyContainers.getEnergyStored());
+            if (energyAdded > 0) this.inputEnergyContainers.removeEnergy(energyAdded);
+        }
+        super.updateFormedValid();
+        if (recipeMapWorkable.isWorking() && color == null) {
+            if (recipeMapWorkable.getPreviousRecipe() != null && recipeMapWorkable.getPreviousRecipe().getFluidOutputs().size() > 0) {
+                int newColor = 0xFF000000 | recipeMapWorkable.getPreviousRecipe().getFluidOutputs().get(0).getFluid().getColor();
+                if (!Objects.equals(color, newColor)) {
+                    color = newColor;
+                    writeCustomData(GregtechDataCodes.UPDATE_COLOR, this::writeColor);
+                }
+            }
+        } else if (!recipeMapWorkable.isWorking() && isStructureFormed() && color != null){
+            color = null;
+            writeCustomData(GregtechDataCodes.UPDATE_COLOR, this::writeColor);
+        }
+    }
+
+    @Override
+    public void writeInitialSyncData(PacketBuffer buf) {
+        super.writeInitialSyncData(buf);
+        writeColor(buf);
+    }
+
+    @Override
+    public void receiveInitialSyncData(PacketBuffer buf) {
+        super.receiveInitialSyncData(buf);
+        readColor(buf);
+    }
+
+    @Override
+    public void receiveCustomData(int dataId, PacketBuffer buf) {
+        super.receiveCustomData(dataId, buf);
+        if (dataId == GregtechDataCodes.UPDATE_COLOR) {
+            readColor(buf);
+        }
+    }
+
+    private void readColor(PacketBuffer buf) {
+        color = buf.readBoolean() ? buf.readVarInt() : null;
+    }
+
+    private void writeColor(PacketBuffer buf) {
+        buf.writeBoolean(color != null);
+        if (color != null) {
+            buf.writeVarInt(color);
+        }
+    }
+
+    @Override
+    protected void addDisplayText(List<ITextComponent> textList) {
+        super.addDisplayText(textList);
+        textList.add(new TextComponentTranslation("gregiousmaximus.multiblock.resource_miner.energy", this.energyContainer.getEnergyStored(), this.energyContainer.getEnergyCapacity()));
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        tooltip.add(I18n.format("gregiousmaximus.resource_miner.capacity", calculateEnergyStorageFactor(16) / 1000000L));
+        tooltip.add(I18n.format("gregiousmaximus.resource_miner.overclocking"));
+    }
+
+    @Nonnull
+    @Override
+    protected ICubeRenderer getFrontOverlay() {
+        return Textures.AUTOCLAVE_OVERLAY;
+    }
+
+    @Override
+    public boolean hasMaintenanceMechanics() {
+        return false;
+    }
+    
+	 private class ResourceMinerRecipeLogic extends MultiblockRecipeLogic {
+
+	        public ResourceMinerRecipeLogic(AddonMetaTileEntityResourceMiner tileEntity) {
+	            super(tileEntity);
+	        }
+
+	        @Override
+	        protected double getOverclockingDurationDivisor() {
+	            return 2.0D;
+	        }
+
+	        @Override
+	        protected double getOverclockingVoltageMultiplier() {
+	            return 2.0D;
+	        }
+
+	        @Override
+	        protected long getMaxVoltage() {
+	            return Math.min(GTValues.V[tier], super.getMaxVoltage());
+	        }
+
+	        @Override
+	        protected boolean checkRecipe(@Nonnull Recipe recipe) {
+	            if (!super.checkRecipe(recipe))
+	                return false;
+
+	            // if the reactor is not able to hold enough energy for it, do not run the recipe
+	            if (recipe.getProperty(ModFusionEUToStartProperty.getInstance(), 0L) > energyContainer.getEnergyCapacity())
+	                 return false;
+	            return true;
+	        }
+
+	        @Override
+	        public NBTTagCompound serializeNBT() {
+	            NBTTagCompound tag = super.serializeNBT();
+	            return tag;
+	        }
+
+	        @Override
+	        public void deserializeNBT(@Nonnull NBTTagCompound compound) {
+	            super.deserializeNBT(compound);
+	        }
+	    }
+
+	    public void renderMetaTileEntity(double x, double y, double z, float partialTicks) {
+	        if (color != null && MinecraftForgeClient.getRenderPass() == 0) {
+	            final int c = color;
+	            BloomEffectUtil.requestCustomBloom(RENDER_HANDLER, (buffer)->{
+	                int color = RenderUtil.colorInterpolator(c, -1).apply(Eases.EaseQuadIn.getInterpolation(Math.abs((Math.abs(getOffsetTimer() % 50) + partialTicks) - 25) / 25));
+	                float a = (float)(color >> 24 & 255) / 255.0F;
+	                float r = (float)(color >> 16 & 255) / 255.0F;
+	                float g = (float)(color >> 8 & 255) / 255.0F;
+	                float b = (float)(color & 255) / 255.0F;
+	                Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+	                if (entity != null) {
+	                    buffer.begin(GL11.GL_QUAD_STRIP, DefaultVertexFormats.POSITION_COLOR);
+	                    RenderBufferHelper.renderRing(buffer,
+	                                x + getFrontFacing().getOpposite().getFrontOffsetX() * 7 + 0.5,
+	                            y + 0.5,
+	                            z + getFrontFacing().getOpposite().getFrontOffsetZ() * 7 + 0.5,
+	                            6, 0.2, 10, 20,
+	                            r, g, b, a, EnumFacing.Axis.Y);
+	                    Tessellator.getInstance().draw();
+	                }
+	            });
+	        }
+	    }
+	    static BloomEffectUtil.IBloomRenderFast RENDER_HANDLER = new BloomEffectUtil.IBloomRenderFast(){
+	        @Override
+	        public int customBloomStyle() {
+	            return ConfigHolder.client.shader.fusionBloom.useShader ? ConfigHolder.client.shader.fusionBloom.bloomStyle : -1;
+	        }
+
+	        float lastBrightnessX;
+	        float lastBrightnessY;
+
+	        @Override
+	        @SideOnly(Side.CLIENT)
+	        public void preDraw(BufferBuilder buffer) {
+	            BloomEffect.strength = (float) ConfigHolder.client.shader.fusionBloom.strength;
+	            BloomEffect.baseBrightness = (float) ConfigHolder.client.shader.fusionBloom.baseBrightness;
+	            BloomEffect.highBrightnessThreshold = (float) ConfigHolder.client.shader.fusionBloom.highBrightnessThreshold;
+	            BloomEffect.lowBrightnessThreshold = (float) ConfigHolder.client.shader.fusionBloom.lowBrightnessThreshold;
+	            BloomEffect.step = 1;
+
+	            lastBrightnessX = OpenGlHelper.lastBrightnessX;
+	            lastBrightnessY = OpenGlHelper.lastBrightnessY;
+	            GlStateManager.color(1,1,1,1);
+	            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
+	            GlStateManager.disableTexture2D();
+	        }
+
+	        @Override
+	        @SideOnly(Side.CLIENT)
+	        public void postDraw(BufferBuilder buffer) {
+	            GlStateManager.enableTexture2D();
+	            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastBrightnessX, lastBrightnessY);
+	        }
+	    };
+	 
+}

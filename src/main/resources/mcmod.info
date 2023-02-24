@@ -11,6 +11,6 @@
   "credits": "GTCEu team for the Mod",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": "required-after:gregtech"
+  "dependencies": ["required-after:gregtech"]
 }
 ]

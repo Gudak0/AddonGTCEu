@@ -52,20 +52,18 @@ dependencies {
     deobfCompile "curse.maven:codechicken-lib-1-8-242818:2779848"
     deobfCompile "curse.maven:ae2-extended-life-570458:3649419"
     deobfCompile "curse.maven:avaritia-261348:3143349"
-    deobfCompile "curse.maven:gregtech-ce-unofficial-557242:4051202"
+    deobfCompile "curse.maven:gregtech-ce-unofficial-557242:4325257"
     deobfCompile "curse.maven:better-builders-wands-238403:2443194"
+    deobfCompile "curse.maven:projecte-226410:2702991"
 
     compile "curse.maven:crafttweaker-239197:3935788"
     
     compile files("etc/jei_1.12.2-4.16.1.301.jar")
     compile files("etc/theoneprobe-1.12-1.4.28.jar")
     compile files("etc/CTM-MC1.12.2-1.0.2.31.jar")
-    compile files("etc/groovyscript-0.0.1.jar")
+    compile files("etc/groovyscript-0.1.0.jar")
 
     deobfCompile "zone.rong:mixinbooter:4.2"
-
-    // testImplementation "junit:junit:4.13.1"
-    // implementation "org.projectlombok:lombok:1.18.16"
     
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

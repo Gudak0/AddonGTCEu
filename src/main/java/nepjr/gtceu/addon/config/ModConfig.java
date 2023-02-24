@@ -2,57 +2,56 @@ package nepjr.gtceu.addon.config;
 
 import org.apache.logging.log4j.Level;
 
+
 import morph.avaritia.Avaritia;
 import nepjr.gtceu.addon.NepJrAddon;
+import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Config(modid = NepJrAddon.MODID)
 public class ModConfig 
 {
-	private static final String CAT_GENERAL = "general";
-	private static final String CAT_COMPAT = "compat";
+	@Config.Comment("General stuff for the mod")
+	@Config.Name("General Options")
+	@Config.RequiresMcRestart
+	public static GeneralOptions general = new GeneralOptions();
 	
-	// General
-	public static boolean ldsCraftMode = false;
+	@Config.Comment("Options for Mod Compatibility")
+	@Config.Name("Compat Options")
+	@Config.RequiresMcRestart
+	public static CompatOptions compat = new CompatOptions();
 	
-	// Compat
-	public static boolean compatAvaritia = true;
+	@Config.Comment("Space related options in the mod")
+	@Config.Name("Space Options")
+	public static SpaceMachineOptions space = new SpaceMachineOptions();
 	
-	public static void readConfig()
+	public static class GeneralOptions 
 	{
-		Configuration cfg = NepJrAddon.config;
-		try
-		{
-			cfg.load();
-			doGeneralStuff(cfg);
-			doCompatStuff(cfg);
-		} catch (Exception error1)
-		{
-			NepJrAddon.logger.log(Level.ERROR, "Problem loading config", error1);
-		}
-		finally
-		{
-			if (cfg.hasChanged())
-			{
-				cfg.save();
-			}
-		}
+		@Config.Comment("Intended for the LDS Craft Modpack")
+		@Config.Name("Enable LDS Mode")
+		public boolean ldsMode = false;
 	}
 	
-	private static void doGeneralStuff(Configuration cfg)
+	public static class CompatOptions
 	{
-		cfg.addCustomCategoryComment(CAT_GENERAL, "General Configuration");
-		ldsCraftMode = cfg.getBoolean("LDS Craft Mode", CAT_GENERAL, ldsCraftMode, "This addon was made for this modpack but I decided to put a boolean to enable and disable features that I implemented specifically for that modpack. You can enable it if you want those features");
+		@Config.Comment("Enables or Disables Avaritia stuff")
+		@Config.Name("Avaritia Compatibility")
+		public boolean avaritiaCompat = true;
 		
+		@Config.Comment("Enables or Disables ProjectE stuff")
+		@Config.Name("ProjectE Compatibility")
+		public boolean projecteCompat = true;
 	}
 	
-	private static void doCompatStuff(Configuration cfg)
+	public static class SpaceMachineOptions
 	{
-		cfg.addCustomCategoryComment(CAT_COMPAT, "Compatibility Configuration");
-		compatAvaritia = cfg.getBoolean("Avaritia Compatibility", CAT_COMPAT, compatAvaritia, "Enable Avaritia compatibility");
-		if (!Loader.isModLoaded(Avaritia.MOD_ID))
-		{
-			compatAvaritia = false;
-		}
+		@Config.Comment("What dimensions are considered space? If you have GalactiCraft installed for example, you should set it to the dimension IDs of the space station and moon")
+		@Config.Name("Space Dimensions")
+		public int spaceDims[] = new int[] {-1,1};
 	}
 }

@@ -1,7 +1,13 @@
 package nepjr.gtceu.addon.items;
 
+import com.google.common.base.CaseFormat;
+
+import gregtech.api.items.materialitem.MetaPrefixItem;
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.common.items.MetaItems;
+import gregtech.api.items.metaitem.MetaOreDictItem;
+import gregtech.api.unification.ore.OrePrefix;
+import gregtech.common.items.MetaItem1;
+import gregtech.common.items.armor.MetaArmor;
 
 public class AddonMetaItems 
 {
@@ -63,17 +69,14 @@ public class AddonMetaItems
 	
     public static void init() {
         AddonMetaItem1 first = new AddonMetaItem1();
-        first.setRegistryName("meta_items");
-        //MetaTool tool = new MetaTool();
-        //tool.setRegistryName("meta_tool");
+        first.setRegistryName("meta_item_1");
         //CT_OREDICT_ITEM = new MetaOreDictItem((short) 0);
         //CT_OREDICT_ITEM.setRegistryName("meta_oredict_item_ct");
         //MetaArmor armor = new MetaArmor();
         //armor.setRegistryName("gt_armor");
         //for (OrePrefix prefix : orePrefixes) {
-           // String regName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, prefix.name());
-           // MetaPrefixItem metaOrePrefix = new MetaPrefixItem(prefix);
-            //metaOrePrefix.setRegistryName(String.format("meta_%s", regName));
+        //    String regName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, prefix.name());
+        //    MetaPrefixItem metaOrePrefix = new MetaPrefixItem(prefix);
+        //    metaOrePrefix.setRegistryName(String.format("meta_%s", regName));
         }
-	
 }

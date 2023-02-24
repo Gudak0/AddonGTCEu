@@ -1,5 +1,7 @@
 package nepjr.gtceu.addon.tile;
 
+import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
+
 import java.util.function.Function;
 
 import gregtech.GregTechMod;
@@ -16,6 +18,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.metatileentities.MetaTileEntities;
+import gregtech.common.metatileentities.converter.MetaTileEntityConverter;
 import gregtech.common.metatileentities.electric.MetaTileEntityHull;
 import gregtech.common.metatileentities.electric.MetaTileEntityMacerator;
 import gregtech.common.metatileentities.multi.electric.MetaTileEntityFusionReactor;
@@ -24,8 +27,13 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluid
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.integration.jei.multiblock.MultiblockInfoCategory;
+import moze_intel.projecte.PECore;
 import nepjr.gtceu.addon.NepJrAddon;
+import nepjr.gtceu.addon.config.ModConfig;
+import nepjr.gtceu.addon.recipes.ModRecipeMaps;
 import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityFusionReactor;
+import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityResourceMiner;
+import nepjr.gtceu.addon.tile.multi.io.AddonMultiblockIOEnergy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import scala.actors.threadpool.Arrays;
@@ -83,7 +91,11 @@ public class AddonMetaTileEntitiesUHV
     public static final MetaTileEntityEnergyHatch[] MOD_ENERGY_INPUT_HATCH_16A = new MetaTileEntityEnergyHatch[GTValues.V.length]; // IV, LuV, ZPM, UV, UHV
     public static final MetaTileEntityEnergyHatch[] MOD_ENERGY_OUTPUT_HATCH = new MetaTileEntityEnergyHatch[GTValues.V.length];
     public static final MetaTileEntityEnergyHatch[] MOD_ENERGY_OUTPUT_HATCH_4A = new MetaTileEntityEnergyHatch[GTValues.V.length]; // EV, IV, LuV, ZPM, UV, UHV
-    public static final MetaTileEntityEnergyHatch[] MOD_ENERGY_OUTPUT_HATCH_16A = new MetaTileEntityEnergyHatch[GTValues.V.length]; // IV, LuV, ZPM, UV, UHV
+    public static final MetaTileEntityEnergyHatch[] MOD_ENERGY_OUTPUT_HATCH_16A = new MetaTileEntityEnergyHatch[GTValues.V.length];
+    public static final MetaTileEntityEnergyHatch[] MOD_ENERGY_OUTPUT_HATCH_MEGA = new MetaTileEntityEnergyHatch[GTValues.V.length];// IV, LuV, ZPM, UV, UHV
+    
+    public static final AddonMultiblockIOEnergy[] MEGA_ENERGY_INPUT_HATCH = new AddonMultiblockIOEnergy[GTValues.V.length];
+    public static final AddonMultiblockIOEnergy[] MEGA_ENERGY_OUTPUT_HATCH = new AddonMultiblockIOEnergy[GTValues.V.length];
     
 	public static void init()
 	{
@@ -242,8 +254,17 @@ public class AddonMetaTileEntitiesUHV
             MOD_ENERGY_INPUT_HATCH_16A[i]  = registerMetaTileEntity(11762 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.input_16a." + voltageName), i, 16, false));
             MOD_ENERGY_OUTPUT_HATCH_4A[i]  = registerMetaTileEntity(11768 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.output_4a." + voltageName), i, 4, true));
             MOD_ENERGY_OUTPUT_HATCH_16A[i] = registerMetaTileEntity(11774 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.output_16a." + voltageName), i, 16, true));
-
         }
+        
+    	if(ModConfig.compat.projecteCompat && Loader.isModLoaded(PECore.MODID))
+    	{
+    		registerSimpleMetaTileEntity(AddonMetaTileEntitiesLV.EMC_CREATOR, 11785, "emc_creator", ModRecipeMaps.EMC_MAKER, Textures.ASSEMBLER_OVERLAY, true, emcTank);
+    		registerSimpleMetaTileEntity(AddonMetaTileEntitiesLV.EMCER, 11791, "emcer", ModRecipeMaps.EMCER, Textures.ASSEMBLER_OVERLAY, true, emcTank);	
+    	}
+    	registerSimpleMetaTileEntity(AddonMetaTileEntitiesLV.TEST, 30000, "test", ModRecipeMaps.TEST, Textures.FERMENTER_OVERLAY, true);
+        MEGA_ENERGY_OUTPUT_HATCH[1] = registerMetaTileEntity(31000, new AddonMultiblockIOEnergy(addonId("mega_energy_hatch.output"), true));
+        MEGA_ENERGY_INPUT_HATCH[1] = registerMetaTileEntity(31001, new AddonMultiblockIOEnergy(addonId("mega_energy_hatch.input"), false));
+        
 }	
 	
 	    private static void registerSimpleMetaTileEntity(SimpleMachineMetaTileEntity[] machines,
@@ -304,7 +325,7 @@ public class AddonMetaTileEntitiesUHV
 	        return new ResourceLocation(NepJrAddon.MODID, name);
 	    }
     static ResourceLocation gregtechId(String name) {
-        return new ResourceLocation(GTValues.MODID, name);
+        return new ResourceLocation(NepJrAddon.MODID, name);
     }
 
     public static final Function<Integer, Integer> megaCappedTankSizeFunction = tier -> {
@@ -320,5 +341,9 @@ public class AddonMetaTileEntitiesUHV
 	    		return 524288;	    	
 	        return 2147483647;
 	    };
+	    public static final Function<Integer, Integer> emcTank = tier -> {
+	        return (int) GTValues.V[tier];
+	    };
+	    
 	
 }

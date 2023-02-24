@@ -23,20 +23,30 @@ import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityFluid
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
 import gregtech.integration.jei.multiblock.MultiblockInfoCategory;
+import moze_intel.projecte.PECore;
+import nepjr.gtceu.addon.config.ModConfig;
+import nepjr.gtceu.addon.recipes.ModRecipeMaps;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import scala.actors.threadpool.Arrays;
 
-public class
-AddonMetaTileEntitiesLV
-{
+public class AddonMetaTileEntitiesLV
+{	
     //public static final SimpleMachineMetaTileEntity[] MOD_REPLICATOR = new SimpleMachineMetaTileEntity[GTValues.V.length];
-    
-	public static void init()
+    public static final SimpleMachineMetaTileEntity[] EMC_CREATOR = new SimpleMachineMetaTileEntity[GTValues.V.length];
+    public static final SimpleMachineMetaTileEntity[] EMCER = new SimpleMachineMetaTileEntity[GTValues.V.length];
+    public static final SimpleMachineMetaTileEntity[] TEST = new SimpleMachineMetaTileEntity[GTValues.V.length];
+    public static void init()
 	{
         // The replicator was here to simply test if this code works.
         //registerSimpleMetaTileEntity(MOD_REPLICATOR, 365, "replicator", RecipeMaps.REPLICATOR_RECIPES, Textures.REPLICATOR_OVERLAY, true);
-    }	
+    	if(ModConfig.compat.projecteCompat && Loader.isModLoaded(PECore.MODID))
+    	{
+    		registerSimpleMetaTileEntity(EMC_CREATOR, 10500, "emc_creator", ModRecipeMaps.EMC_MAKER, Textures.ASSEMBLER_OVERLAY, true, emcTank);
+    		registerSimpleMetaTileEntity(EMCER, 10508, "emcer", ModRecipeMaps.EMCER, Textures.ASSEMBLER_OVERLAY, true, emcTank);	
+    	}
+    	registerSimpleMetaTileEntity(TEST, 365, "test", ModRecipeMaps.TEST, Textures.FERMENTER_OVERLAY, true);
+	}	
 	
 	    private static void registerSimpleMetaTileEntity(SimpleMachineMetaTileEntity[] machines,
                                                     int startId,
@@ -92,4 +102,8 @@ AddonMetaTileEntitiesLV
 	  private static ResourceLocation gregtechId(String name) {
 	        return new ResourceLocation(GTValues.MODID, name);
 	    }
+	  
+    public static final Function<Integer, Integer> emcTank = tier -> {
+	        return (int) GTValues.V[tier];
+	    };
 }

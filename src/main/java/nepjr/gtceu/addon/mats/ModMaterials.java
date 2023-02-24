@@ -4,6 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.GregTechAPI.MaterialEvent;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.material.properties.ToolProperty;
 import morph.avaritia.Avaritia;
 import nepjr.gtceu.addon.NepJrAddon;
 import nepjr.gtceu.addon.config.ModConfig;
@@ -28,11 +29,29 @@ public class ModMaterials
     public static Material proton;
     public static Material neutron;
     public static Material darquadahstadtium;
+    public static Material dantanium;
+    
+    public static Material liquidEMC;
+    public static Material bedrockium;
+    
     
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void register(MaterialEvent event) 
+    { 
+    	ModMaterials.liquidEMC = new Material.Builder(24000, "emc.liquid")
+    			.fluid()
+    			.build();
+    	
+    	ModMaterials.bedrockium = new Material.Builder(24001, "bedrockium")
+    			.fluid().ingot().dust()
+				.flags(GENERATE_FOIL, GENERATE_RING, GENERATE_SPRING, GENERATE_SPRING_SMALL, GENERATE_SMALL_GEAR, GENERATE_FINE_WIRE, GENERATE_ROTOR, GENERATE_DENSE, GENERATE_ROUND)
+				.toolStats(ToolProperty.Builder.of(20, 75, 262144, 15).build())
+				.build();
+    }
+    
+    public static void doNotRegisterRightNow(MaterialEvent event) 
     {   
-		  if(ModConfig.compatAvaritia && Loader.isModLoaded(Avaritia.MOD_ID))
+		  if(ModConfig.compat.avaritiaCompat && Loader.isModLoaded(Avaritia.MOD_ID))
 		  {
 			ModMaterials.infinity = new Material.Builder(24000, "infinity")
 					  .color(0xFFFFFF)
@@ -42,7 +61,7 @@ public class ModMaterials
 					  .components(Iron, 5400, Gold, 3600, Lapis, 3600, Redstone, 6300, NetherQuartz, 1600, Diamond, 4500, Emerald, 3600, Copper, 5400, Tin, 5400, Lead, 4500, Silver, 4500, Nickel, 5400)
 					  .build();
 		  }
-		  if (ModConfig.ldsCraftMode)
+		  if (ModConfig.general.ldsMode)
 		  {
 			ModMaterials.element_zero = new Material.Builder(24001, "element_zero")
 					  .color(0x000000)
@@ -52,6 +71,11 @@ public class ModMaterials
 			  	      .cableProperties(GTValues.V[13], 1, 0, true)
 			  	      .fluidPipeProperties(2147483647, 119304647, true)
 					  .build();
+			
+            dantanium = new Material.Builder(22000, "dantanium")
+                    .color(0xFF00FF)
+                    .ingot().dust().fluid()
+                    .build();
 		  }
 		 ModMaterials.nepjrium = new Material.Builder(24002, "nepjrium")
 				 .color(0xFF00FF)
