@@ -165,7 +165,7 @@ public class AddonMetaTileEntitiesUHV
 
         // TODO Should anonymously override SimpleMachineMetaTileEntity#getCircuitSlotOverlay() to display the data stick overlay
         // Replicator, IDs 365-379
-        registerSimpleMetaTileEntity(MOD_REPLICATOR, 11618, "replicator", RecipeMaps.REPLICATOR_RECIPES, Textures.REPLICATOR_OVERLAY, true);
+        //registerSimpleMetaTileEntity(MOD_REPLICATOR, 11618, "replicator", RecipeMaps.REPLICATOR_RECIPES, Textures.REPLICATOR_OVERLAY, true);
 
         // Fluid Heater, IDs 380-394
         registerSimpleMetaTileEntity(MOD_FLUID_HEATER, 11624, "fluid_heater", RecipeMaps.FLUID_HEATER_RECIPES, Textures.FLUID_HEATER_OVERLAY, true, megaCappedTankSizeFunction);

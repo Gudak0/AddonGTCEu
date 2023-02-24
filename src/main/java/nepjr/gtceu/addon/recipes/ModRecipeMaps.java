@@ -60,4 +60,11 @@ public class ModRecipeMaps
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, MoveType.HORIZONTAL)
             .setSound(GTValues.FOOLS.get() ? GTSoundEvents.SCIENCE : GTSoundEvents.CHEMICAL_REACTOR);
     
+    @ZenProperty
+    public static final RecipeMap<SimpleSpaceRecipeBuilder> SPACE_ALLOY_SMELTER_RECIPES = new RecipeMap<>("space_alloy_smelter", 1, 2, 1, 1, 0, 0, 0, 0, new SimpleSpaceRecipeBuilder(), false)
+            .setSlotOverlay(false, false, GuiTextures.FURNACE_OVERLAY_1)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, MoveType.HORIZONTAL)
+            .setSound(GTSoundEvents.FURNACE);
+
+    
 }

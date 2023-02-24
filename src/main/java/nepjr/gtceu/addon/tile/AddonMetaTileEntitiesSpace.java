@@ -104,7 +104,7 @@ public class AddonMetaTileEntitiesSpace
 		SPACE_MACERATOR[13] =  MetaTileEntities.registerMetaTileEntity(16012, new MetaTileEntityMacerator(addonId("space_macerator.opv"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 13));
 		SPACE_MACERATOR[14] =  MetaTileEntities.registerMetaTileEntity(16013, new MetaTileEntityMacerator(addonId("space_macerator.max"), RecipeMaps.MACERATOR_RECIPES, 4, Textures.PULVERIZER_OVERLAY, 14));
         
-        registerSimpleMetaTileEntity(SPACE_ALLOY_SMELTER, 16014, "space_alloy_smelter", RecipeMaps.ALLOY_SMELTER_RECIPES, Textures.ALLOY_SMELTER_OVERLAY, true);
+        registerSimpleMetaTileEntity(SPACE_ALLOY_SMELTER, 16014, "space_alloy_smelter", ModRecipeMaps.SPACE_ALLOY_SMELTER_RECIPES, Textures.ALLOY_SMELTER_OVERLAY, true);
         
         // Arc Furnace, IDs 95-109
         registerSimpleMetaTileEntity(SPACE_ARC_FURNACE, 16028, "space_arc_furnace", RecipeMaps.ARC_FURNACE_RECIPES, Textures.ARC_FURNACE_OVERLAY, false, GTUtility.hvCappedTankSizeFunction);
