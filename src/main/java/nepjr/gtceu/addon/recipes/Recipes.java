@@ -51,6 +51,7 @@ public class Recipes {
 		.EUt(32)
 		.buildAndRegister();
 		
+
 		// add space machine recipes here to account for all space dimensions
 		
 		for (Recipe r : RecipeMaps.CHEMICAL_RECIPES.getRecipeList())

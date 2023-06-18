@@ -11,6 +11,7 @@ import nepjr.gtceu.addon.config.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -27,35 +28,36 @@ public class MachineRelatedEvents
 	@SubscribeEvent
 	public static void disallowRegularMachinesInSpace(EntityPlaceEvent event)
 	{
+		// Make sure we're a real player
 		if (event.getEntity() instanceof EntityPlayer)
 		{
+			// Check if we're in space dimensions
 			EntityPlayer player = (EntityPlayer) event.getEntity();
-			if (ArrayUtils.contains(ModConfig.space.spaceDims, event.getWorld().provider.getDimension()))
+			if (ArrayUtils.contains(ModConfig.space.spaceDims, event.getWorld().provider.getDimension())) // Checks if the current dimension a player is in equals a space dimension
 			{
-				ItemStack item = player.getHeldItemMainhand();
-				if (player.getHeldItemMainhand().getItem() instanceof MachineItemBlock)
+				// Check the held item and see if it's a GT machine
+				Item item = player.getHeldItemMainhand().getItem();
+				if (item instanceof MachineItemBlock)
 				{
-					MachineItemBlock machine = (MachineItemBlock) player.getHeldItemMainhand().getItem();
-					if (!(machine.getMetadata(item) != 1650 || machine.getMetadata(item) != 1669 || machine.getMetadata(item) != 1668) && machine.getMetadata(item) < 16000 || machine.getMetadata(item) > 16609)
+					// I want that machine OBLITTERATED! (not really but still)
+					if(!(ArrayUtils.contains(ModConfig.space.allowedMachines, player.getHeldItemMainhand().getMetadata())) && player.getHeldItemMainhand().getMetadata() < 16000)
 					{
-						player.sendMessage(new TextComponentString("This machine is not advanced enough to be placed in space (it may turn into a ghost item)"));
+						player.sendMessage(new TextComponentString("This machine is not advanced enough to be in space! (The item may turn into a ghost item!)"));
 						event.setCanceled(true);
 					}
-					NepJrAddon.logger.log(Level.INFO, machine.getMetadata(item));
 				}
-				if (player.getHeldItemOffhand().getItem() instanceof MachineItemBlock)
+				// Same shit different hand
+				Item item2 = player.getHeldItemOffhand().getItem();
+				if (item2 instanceof MachineItemBlock)
 				{
-					MachineItemBlock machine = (MachineItemBlock) player.getHeldItemOffhand().getItem();
-					if (!(machine.getMetadata(item) != 1650 || machine.getMetadata(item) != 1669 || machine.getMetadata(item) != 1668) && machine.getMetadata(item) < 16000 || machine.getMetadata(item) > 16609)
+					// you know who else wants that machine oblitterated?
+					if(!(ArrayUtils.contains(ModConfig.space.allowedMachines, player.getHeldItemOffhand().getMetadata())) && player.getHeldItemOffhand().getMetadata() < 16000)
 					{
-						player.sendMessage(new TextComponentString("This machine is not advanced enough to be placed in space (it may turn into a ghost item)"));
+						player.sendMessage(new TextComponentString("This machine is not advanced enough to be in space! (The item may turn into a ghost item!)"));
 						event.setCanceled(true);
 					}
-					NepJrAddon.logger.log(Level.INFO, machine.getMetadata(item));
 				}
 			}
 		}
-
 	}
-	
 }

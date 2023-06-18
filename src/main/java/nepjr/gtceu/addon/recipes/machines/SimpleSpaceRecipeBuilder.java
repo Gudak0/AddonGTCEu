@@ -11,12 +11,11 @@ import crafttweaker.CraftTweakerAPI;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.builders.GasCollectorRecipeBuilder;
-import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.api.recipes.recipeproperties.GasCollectorDimensionProperty;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.ints.IntLists;
+import nepjr.gtceu.addon.config.ModConfig;
 
 public class SimpleSpaceRecipeBuilder extends RecipeBuilder<SimpleSpaceRecipeBuilder> {
 
@@ -48,9 +47,14 @@ public class SimpleSpaceRecipeBuilder extends RecipeBuilder<SimpleSpaceRecipeBui
                     this.applyProperty(GasCollectorDimensionProperty.getInstance(), dimensionIDs);
                 }
                 dimensionIDs.addAll((List<Integer>) value);
-            } else {
+            }
+            else if(value instanceof String)
+            {
+            	this.dimension(ModConfig.space.spaceDims);
+            }
+            else {
                 if (isCTRecipe) {
-                    CraftTweakerAPI.logError("Dimension for Gas Collector needs to be a Integer");
+                    CraftTweakerAPI.logError("Dimension for Space machine needs to be a Integer");
                     return false;
                 }
                 throw new IllegalArgumentException("Invalid Dimension Property Type!");

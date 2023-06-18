@@ -53,5 +53,10 @@ public class ModConfig
 		@Config.Comment("What dimensions are considered space? If you have GalactiCraft installed for example, you should set it to the dimension IDs of the space station and moon")
 		@Config.Name("Space Dimensions")
 		public int spaceDims[] = new int[] {-1,1};
+		
+		@Config.Comment("What machines are allowed to be placed in space? To get these IDs, check the metadata number of the machine")
+		@Config.Name("Allowed Machines in space")
+		public int allowedMachines[] = new int[] {530, 531, 532, 533, 534, 535, 536, 537, 1650, 1669, 1668};
+		
 	}
 }
