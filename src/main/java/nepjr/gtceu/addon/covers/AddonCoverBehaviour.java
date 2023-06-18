@@ -28,12 +28,12 @@ public class AddonCoverBehaviour
 
     public static void init() 
     {
-    	registerBehavior(104, new ResourceLocation(GTValues.MODID, "conveyor.uhv"), AddonMetaItems.CONVEYOR_MODULE_UHV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UHV, 32 * 64));
-    	registerBehavior(105, new ResourceLocation(GTValues.MODID, "conveyor.uev"), AddonMetaItems.CONVEYOR_MODULE_UEV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UEV, 64 * 64));
-    	registerBehavior(106, new ResourceLocation(GTValues.MODID, "conveyor.uiv"), AddonMetaItems.CONVEYOR_MODULE_UIV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UIV, 128 * 64));
-    	registerBehavior(107, new ResourceLocation(GTValues.MODID, "conveyor.uxv"), AddonMetaItems.CONVEYOR_MODULE_UXV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UXV, 256 * 64));
-    	registerBehavior(108, new ResourceLocation(GTValues.MODID, "conveyor.opv"), AddonMetaItems.CONVEYOR_MODULE_OpV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.OpV, 512 * 64));
-    	registerBehavior(109, new ResourceLocation(GTValues.MODID, "conveyor.max"), AddonMetaItems.CONVEYOR_MODULE_MAX, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.MAX, 2147483647));
+    	//registerBehavior(104, new ResourceLocation(GTValues.MODID, "conveyor.uhv"), AddonMetaItems.CONVEYOR_MODULE_UHV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UHV, 32 * 64));
+    	//registerBehavior(105, new ResourceLocation(GTValues.MODID, "conveyor.uev"), AddonMetaItems.CONVEYOR_MODULE_UEV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UEV, 64 * 64));
+    	//registerBehavior(106, new ResourceLocation(GTValues.MODID, "conveyor.uiv"), AddonMetaItems.CONVEYOR_MODULE_UIV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UIV, 128 * 64));
+    	//registerBehavior(107, new ResourceLocation(GTValues.MODID, "conveyor.uxv"), AddonMetaItems.CONVEYOR_MODULE_UXV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.UXV, 256 * 64));
+    	//registerBehavior(108, new ResourceLocation(GTValues.MODID, "conveyor.opv"), AddonMetaItems.CONVEYOR_MODULE_OpV, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.OpV, 512 * 64));
+    	//registerBehavior(109, new ResourceLocation(GTValues.MODID, "conveyor.max"), AddonMetaItems.CONVEYOR_MODULE_MAX, (tile, side) -> new AddonCoverConveyor(tile, side, GTValues.MAX, 2147483647));
     }
 	
     public static void registerBehavior(int coverNetworkId, ResourceLocation coverId, MetaValueItem placerItem, BiFunction<ICoverable, EnumFacing, CoverBehavior> behaviorCreator) {

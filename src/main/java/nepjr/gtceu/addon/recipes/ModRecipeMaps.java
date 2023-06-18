@@ -50,6 +50,12 @@ public class ModRecipeMaps
     		.setSound(GTSoundEvents.ARC);
     
     @ZenProperty
+    public static final RecipeMap<SimpleSpaceRecipeBuilder> VOID_ORE_MINER = new RecipeMap<>("void_ore_miner", 0, 1, 0, 25, 0, 0, 0, 0, new SimpleSpaceRecipeBuilder(), false)
+    		.setSlotOverlay(false, false, GuiTextures.PROGRESS_BAR_CIRCUIT_ASSEMBLER)
+    		.setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, MoveType.HORIZONTAL)
+    		.setSound(GTSoundEvents.DRILL_TOOL);
+    
+    @ZenProperty
     public static final RecipeMap<SimpleSpaceRecipeBuilder> SPACE_CHEMICAL_REACTOR = new RecipeMap<>("space_chemical_reactor", 0, 2, 0, 2, 0, 3, 0, 2, new SimpleSpaceRecipeBuilder().EUt(VA[LV]), false)
             .setSlotOverlay(false, false, false, GuiTextures.MOLECULAR_OVERLAY_1)
             .setSlotOverlay(false, false, true, GuiTextures.MOLECULAR_OVERLAY_2)

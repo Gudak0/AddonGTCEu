@@ -54,9 +54,9 @@ public class ModConfig
 		@Config.Name("Space Dimensions")
 		public int spaceDims[] = new int[] {-1,1};
 		
-		@Config.Comment("What machines are allowed to be placed in space? To get these IDs, check the metadata number of the machine")
+		@Config.Comment("What machines are allowed to be placed in space? To get these IDs, check the metadata number of the machine. By default Gas collectors are allowed. By default it everything, so long as the metadata value is < 672 < 11500")
 		@Config.Name("Allowed Machines in space")
-		public int allowedMachines[] = new int[] {530, 531, 532, 533, 534, 535, 536, 537, 1650, 1669, 1668};
+		public int allowedMachines[] = new int[] {530, 531, 532, 533, 534, 535, 536, 537};
 		
 	}
 }

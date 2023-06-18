@@ -40,7 +40,10 @@ public class MachineRelatedEvents
 				if (item instanceof MachineItemBlock)
 				{
 					// I want that machine OBLITTERATED! (not really but still)
-					if(!(ArrayUtils.contains(ModConfig.space.allowedMachines, player.getHeldItemMainhand().getMetadata())) && player.getHeldItemMainhand().getMetadata() < 16000)
+					if(!(ArrayUtils.contains(ModConfig.space.allowedMachines, player.getHeldItemMainhand().getMetadata()))
+							&& player.getHeldItemMainhand().getMetadata() < 672
+							|| (player.getHeldItemMainhand().getMetadata() > 1269
+							&& player.getHeldItemMainhand().getMetadata() < 16000))
 					{
 						player.sendMessage(new TextComponentString("This machine is not advanced enough to be in space! (The item may turn into a ghost item!)"));
 						event.setCanceled(true);
@@ -51,7 +54,10 @@ public class MachineRelatedEvents
 				if (item2 instanceof MachineItemBlock)
 				{
 					// you know who else wants that machine oblitterated?
-					if(!(ArrayUtils.contains(ModConfig.space.allowedMachines, player.getHeldItemOffhand().getMetadata())) && player.getHeldItemOffhand().getMetadata() < 16000)
+					if(!(ArrayUtils.contains(ModConfig.space.allowedMachines, player.getHeldItemOffhand().getMetadata())) 
+							&& (player.getHeldItemOffhand().getMetadata() < 672 
+							|| (player.getHeldItemOffhand().getMetadata() > 1269 
+							&& player.getHeldItemOffhand().getMetadata() < 16000)))
 					{
 						player.sendMessage(new TextComponentString("This machine is not advanced enough to be in space! (The item may turn into a ghost item!)"));
 						event.setCanceled(true);

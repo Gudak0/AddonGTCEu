@@ -31,8 +31,6 @@ import nepjr.gtceu.addon.NepJrAddon;
 import nepjr.gtceu.addon.api.metatileentity.SimpleMachineSpaceMetaTileEntity;
 import nepjr.gtceu.addon.config.ModConfig;
 import nepjr.gtceu.addon.recipes.ModRecipeMaps;
-import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityFusionReactor;
-import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityResourceMiner;
 import nepjr.gtceu.addon.tile.multi.io.AddonMultiblockIOEnergy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -236,7 +234,7 @@ public class AddonMetaTileEntitiesSpace
         }
         
         // Hulls, IDs 985-999
-        int endPos = !GTValues.HT ? SPACE_HULL.length : Math.min(SPACE_HULL.length, GTValues.V.length);
+        int endPos = !false ? SPACE_HULL.length : Math.min(SPACE_HULL.length, GTValues.V.length);
         for (int i = 0; i < endPos; i++) {
             SPACE_HULL[i] = new MetaTileEntityHull(addonId("space_hull." + GTValues.VN[i].toLowerCase()), i);
             registerMetaTileEntity(16564 + i, SPACE_HULL[i]);

@@ -31,8 +31,6 @@ import moze_intel.projecte.PECore;
 import nepjr.gtceu.addon.NepJrAddon;
 import nepjr.gtceu.addon.config.ModConfig;
 import nepjr.gtceu.addon.recipes.ModRecipeMaps;
-import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityFusionReactor;
-import nepjr.gtceu.addon.tile.multi.elec.AddonMetaTileEntityResourceMiner;
 import nepjr.gtceu.addon.tile.multi.io.AddonMultiblockIOEnergy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -238,14 +236,14 @@ public class AddonMetaTileEntitiesUHV
         }
         
         // Hulls, IDs 985-999
-        int endPos = !GTValues.HT ? MOD_HULL.length : Math.min(MOD_HULL.length, GTValues.V.length);
+        int endPos = !false ? MOD_HULL.length : Math.min(MOD_HULL.length, GTValues.V.length);
         for (int i = 10; i < endPos; i++) {
             MOD_HULL[i] = new MetaTileEntityHull(addonId("hull." + GTValues.VN[i].toLowerCase()), i);
             registerMetaTileEntity(11738 + i -10, MOD_HULL[i]);
         }
         
         // Energy Input/Output Hatches, IDs 1210-1269
-        endPos = !GTValues.HT ? MOD_ENERGY_INPUT_HATCH.length : Math.min(MOD_ENERGY_INPUT_HATCH.length, GTValues.V.length);
+        endPos = !false ? MOD_ENERGY_INPUT_HATCH.length : Math.min(MOD_ENERGY_INPUT_HATCH.length, GTValues.V.length);
         for (int i = 10; i < endPos; i++) {
             String voltageName = GTValues.VN[i].toLowerCase();
             MOD_ENERGY_INPUT_HATCH[i] = registerMetaTileEntity(11744 + i -10, new MetaTileEntityEnergyHatch(addonId("energy_hatch.input." + voltageName), i, 2, false));

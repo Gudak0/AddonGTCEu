@@ -52,7 +52,7 @@ dependencies {
     deobfCompile "curse.maven:codechicken-lib-1-8-242818:2779848"
     deobfCompile "curse.maven:ae2-extended-life-570458:3649419"
     deobfCompile "curse.maven:avaritia-261348:3143349"
-    deobfCompile "curse.maven:gregtech-ce-unofficial-557242:4325257"
+    deobfCompile "curse.maven:gregtech-ce-unofficial-557242:4527757"
     deobfCompile "curse.maven:better-builders-wands-238403:2443194"
     deobfCompile "curse.maven:projecte-226410:2702991"
 

@@ -54,7 +54,7 @@ import nepjr.gtceu.addon.config.ModConfig;
 
 // To anyone browsing and/or editing this code: do NOT remove the dependencies part in the @Mod section below, or the game will crash
 // If you remove it and complain to me, I WILL call you dumpy
-@Mod(modid = NepJrAddon.MODID, name = NepJrAddon.NAME, version = NepJrAddon.VERSION, dependencies = GTValues.MOD_VERSION_DEP  + "after:" + PECore.MODID)
+@Mod(modid = NepJrAddon.MODID, name = NepJrAddon.NAME, version = NepJrAddon.VERSION, dependencies = gregtech.GTInternalTags.DEP_VERSION_STRING  + "after:" + PECore.MODID)
 public class NepJrAddon
 {
     public static final String MODID = "gregiousmaximus";
