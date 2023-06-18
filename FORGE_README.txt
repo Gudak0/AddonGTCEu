@@ -1,3 +1,5 @@
+This readme has been slightly edited by NepJr/Gudak0 to be a bit more up-to-date
+
 -------------------------------------------
 Source installation information for modders
 -------------------------------------------
@@ -27,14 +29,10 @@ Linux/Mac OS: "./gradlew setupDecompWorkspace"
 Step 3: After all that finished, you're left with a choice.
 For eclipse, run "gradlew eclipse" (./gradlew eclipse if you are on Mac/Linux)
 
-If you prefer to use IntelliJ, steps are a little different.
-1. Open IDEA, and import project.
-2. Select your build.gradle file and have it import.
-3. Once it's finished you must close IntelliJ and run the following command:
+If you prefer to use IntelliJ, the Gradle project is too out of date and won't open by IntelliJ. Unfortunately, you'll have to switch to Eclipse.
+If you want to fix that, feel free to do so and send a pull request
 
-"gradlew genIntellijRuns" (./gradlew genIntellijRuns if you are on Mac/Linux)
-
-Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/ (if you use IDEA, it should automatically start on your project)
+Step 4: The final step is to open Eclipse and enter an empty workspace, then Import > Existing Project > Gradle > Select the folder you cloned this repo to and click accept.
 
 If at any point you are missing libraries in your IDE, or you've run into problems you can run "gradlew --refresh-dependencies" to refresh the local cache. "gradlew clean" to reset everything {this does not affect your code} and then start the processs again.
 

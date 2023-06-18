@@ -1,5 +1,6 @@
 package nepjr.gtceu.addon.recipes.machines;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -38,8 +39,8 @@ public class SimpleSpaceRecipeBuilder extends RecipeBuilder<SimpleSpaceRecipeBui
     @Override
     public boolean applyProperty(@Nonnull String key, Object value) {
         if (key.equals(GasCollectorDimensionProperty.KEY)) {
-            if (value instanceof Integer) {
-                this.dimension((Integer) value);
+            if (value instanceof Array) {
+                this.dimension((int[]) value);
             } else if (value instanceof List && !((List<?>) value).isEmpty() && ((List<?>) value).get(0) instanceof Integer) {
                 IntList dimensionIDs = getDimensionIDs();
                 if (dimensionIDs == IntLists.EMPTY_LIST) {
@@ -59,13 +60,17 @@ public class SimpleSpaceRecipeBuilder extends RecipeBuilder<SimpleSpaceRecipeBui
         return super.applyProperty(key, value);
     }
 
-    public SimpleSpaceRecipeBuilder dimension(int dimensionID) {
+    public SimpleSpaceRecipeBuilder dimension(int[] dimensionID) {
         IntList dimensionIDs = getDimensionIDs();
+        int i;
         if (dimensionIDs == IntLists.EMPTY_LIST) {
             dimensionIDs = new IntArrayList();
             this.applyProperty(GasCollectorDimensionProperty.getInstance(), dimensionIDs);
         }
-        dimensionIDs.add(dimensionID);
+        for (i = 0; i < dimensionID.length; i++)
+        {
+        	dimensionIDs.add(dimensionID[i]);
+        }
         return this;
     }
 

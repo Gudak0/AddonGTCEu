@@ -51,68 +51,31 @@ public class Recipes {
 		.EUt(32)
 		.buildAndRegister();
 		
-		for(i = 0; i < ModConfig.space.spaceDims.length; i++)
+		// add space machine recipes here to account for all space dimensions
+		
+		for (Recipe r : RecipeMaps.CHEMICAL_RECIPES.getRecipeList())
 		{
-			dim = ModConfig.space.spaceDims[i];
-			
-			for (Recipe r : RecipeMaps.CHEMICAL_RECIPES.getRecipeList())
-			{
-				ModRecipeMaps.SPACE_CHEMICAL_REACTOR.recipeBuilder().append(r, 1, false).dimension(dim).buildAndRegister();
-			}
-			
-			for (Recipe r : RecipeMaps.ALLOY_SMELTER_RECIPES.getRecipeList())
-			{
-				ModRecipeMaps.SPACE_ALLOY_SMELTER_RECIPES.recipeBuilder().append(r, 1, false).dimension(dim).buildAndRegister();
-			}
-			
-			// add space machine recipes here to account for all space dimensions
-			ModRecipeMaps.SPACE_CHEMICAL_REACTOR.recipeBuilder()
-			.fluidInputs(Materials.Iron.getFluid(144), Materials.Water.getFluid(144))
-			.fluidOutputs(Materials.Brass.getFluid(144))
-			.EUt(32)
-			.duration(10)
-			.dimension(dim)
-			.buildAndRegister();
-			
-			ModRecipeMaps.SPACE_ALLOY_SMELTER_RECIPES.recipeBuilder()
-			.inputs(Items.IRON_INGOT.getDefaultInstance(), Items.COAL.getDefaultInstance())
-			.output(OrePrefix.ingot, Materials.Steel, 1)
-			.EUt(32767)
-			.duration(10)
-			.dimension(dim)
-			.buildAndRegister();
+			ModRecipeMaps.SPACE_CHEMICAL_REACTOR.recipeBuilder().append(r, 1, false).dimension(ModConfig.space.spaceDims).buildAndRegister();
 		}
 		
-
-		
-		
-		
-	}
-	public static void doNotRegisterRightNow()
-	{
-		ModRecipeMaps.HYPER_FUSION_RECIPES.recipeBuilder()
-		.fluidInputs(Materials.Neutronium.getFluid(16000), Materials.Naquadah.getFluid(16000))
-		.fluidOutputs(ModMaterials.nepjrium.getFluid(144))
-		.duration(950)
-		.EUt(524288)
-		.AddonEUToStart(2147483647)
-		.buildAndRegister();
-
-		RecipeMaps.FUSION_RECIPES.recipeBuilder()
-		.fluidInputs(Materials.Neutronium.getFluid(16000), Materials.Naquadah.getFluid(16000))
-		.fluidOutputs(Materials.Iron.getFluid(144))
-		.duration(950)
-		.EUt(524288)
-		.EUToStart(640000000)
-		.buildAndRegister();
-		
-		RecipeMaps.FUSION_RECIPES.recipeBuilder()
-		.fluidInputs(Materials.Naquadah.getFluid(144), Materials.Darmstadtium.getFluid(144))
-		.fluidOutputs(ModMaterials.darquadahstadtium.getFluid(16))
-		.duration(72000)
-		.EUt(524288)
-		.EUToStart(640000000)
-		.buildAndRegister();
-		
+		for (Recipe r : RecipeMaps.ALLOY_SMELTER_RECIPES.getRecipeList())
+		{
+			ModRecipeMaps.SPACE_ALLOY_SMELTER_RECIPES.recipeBuilder().append(r, 1, false).dimension(ModConfig.space.spaceDims).buildAndRegister();
+		}
+		ModRecipeMaps.SPACE_CHEMICAL_REACTOR.recipeBuilder()
+				.fluidInputs(Materials.Iron.getFluid(144), Materials.Water.getFluid(144))
+				.fluidOutputs(Materials.Brass.getFluid(144))
+				.EUt(32)
+				.duration(10)
+				.dimension(ModConfig.space.spaceDims)
+				.buildAndRegister();
+					
+		ModRecipeMaps.SPACE_ALLOY_SMELTER_RECIPES.recipeBuilder()
+				.inputs(Items.IRON_INGOT.getDefaultInstance(), Items.COAL.getDefaultInstance())
+				.output(OrePrefix.ingot, Materials.Steel, 1)
+				.EUt(32767)
+				.duration(10)
+				.dimension(ModConfig.space.spaceDims)
+				.buildAndRegister();
 	}
 }
